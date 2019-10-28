@@ -2,6 +2,7 @@
 
 Node::Node()
 {
+
 }
 
 Node::~Node()
