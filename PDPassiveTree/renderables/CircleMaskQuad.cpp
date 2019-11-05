@@ -1,7 +1,7 @@
-#include "TexturedQuad.h"
+#include "CircleMaskQuad.h"
 #include "../Render.h"
 
-TexturedQuad::TexturedQuad(unsigned int& _texture, glm::vec3 _position, int _width, int _height)
+CircleMaskQuad::CircleMaskQuad(unsigned int& _texture, unsigned int& _textureMask, glm::vec3 _position, int _width, int _height)
 {
 	position = _position;
 	width = _width;
@@ -32,7 +32,7 @@ TexturedQuad::TexturedQuad(unsigned int& _texture, glm::vec3 _position, int _wid
 	};
 
 	// Create and compile our GLSL program from the shaders
-	programID = LoadShaders("shaders/SimpleTexture.vertexshader", "shaders/SimpleTexture.fragmentshader");
+	programID = LoadShaders("shaders/CircleMaskedTexture.vertexshader", "shaders/CircleMaskedTexture.fragmentshader");
 
 	BindVAO();
 	BindVBO();
@@ -50,13 +50,14 @@ TexturedQuad::TexturedQuad(unsigned int& _texture, glm::vec3 _position, int _wid
 	MVP = Projection * View * model;
 
 	texture = _texture;
+	textureMask = _textureMask;
 }
 
-TexturedQuad::~TexturedQuad()
+CircleMaskQuad::~CircleMaskQuad()
 {
 }
 
-void TexturedQuad::Draw()
+void CircleMaskQuad::Draw()
 {
 	glUseProgram(programID);
 
@@ -94,17 +95,20 @@ void TexturedQuad::Draw()
 	);
 
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-	glUniform1i(glGetUniformLocation(programID, "circleMask"), textureMask);
+	glUniform1i(glGetUniformLocation(programID, "ourTexture"), 0);
+	glUniform1i(glGetUniformLocation(programID, "circleMask"), 1);	
 
-
+	glActiveTexture(GL_TEXTURE0 + 0);
 	glBindTexture(GL_TEXTURE_2D, texture);
+	glActiveTexture(GL_TEXTURE0 + 1);
+	glBindTexture(GL_TEXTURE_2D, textureMask);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, (void*)0);
 
 	glDisableVertexAttribArray(0);
 }
 
-void TexturedQuad::Update()
+void CircleMaskQuad::Update()
 {
 	glm::mat4 Projection = Render::getInstance()->Projection;
 	glm::mat4 View = Render::getInstance()->View;
@@ -115,7 +119,6 @@ void TexturedQuad::Update()
 	MVP = Projection * View * model;
 }
 
-void TexturedQuad::UpdateTexture(unsigned int& _texture)
+void CircleMaskQuad::UpdateTexture(unsigned int& _texture)
 {
-	texture = _texture;
 }

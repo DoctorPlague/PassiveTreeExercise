@@ -9,5 +9,7 @@ public:
 	void Draw();
 	void Update();
 	void UpdateTexture(unsigned int& _texture);
+
+	unsigned int textureMask;
 };
 

@@ -42,6 +42,9 @@
     <ClCompile Include="renderables\TexturedQuad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="renderables\CircleMaskQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\shader.hpp">
@@ -74,9 +77,21 @@
     <ClInclude Include="renderables\TexturedQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="renderables\CircleMaskQuad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\Background1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\CircleMask.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="CircleMask.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="CircleMask16.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -87,6 +102,8 @@
     <None Include="shaders\SimpleTexture.vertexshader" />
     <None Include="shaders\SimpleTransform.vertexshader" />
     <None Include="shaders\SimpleVertexShader.vertexshader" />
+    <None Include="shaders\CircleMaskedTexture.fragmentshader" />
+    <None Include="shaders\CircleMaskedTexture.vertexshader" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="data.txt" />

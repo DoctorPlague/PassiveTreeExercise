@@ -81,6 +81,10 @@ void Render::Init()
 
 	// Dark blue background
 	glClearColor(0.035f, 0.035f, 0.035f, 0.0f);	
+
+	// Enable blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	Projection = glm::ortho((-ScreenWidth * 9.5f) * zoomLevel, (ScreenWidth * 9.5f) * zoomLevel, (ScreenHeight * 9.5f) * zoomLevel, (-ScreenHeight * 9.5f) * zoomLevel, -1.0f, 1.0f); // In world coordinates
 
@@ -174,7 +178,7 @@ void Render::PrepareImageFile(const char* _imageName, const char* _directory, co
 		}
 
 		curl_easy_cleanup(curlCtx);
-		fclose(fp);
+		fclose(fp); 
 	}
 }
 
@@ -186,7 +190,7 @@ bool Render::GenerateTexture(unsigned int& _texture, std::string _imagePath, int
 
 	int nrChannels;
 	unsigned char* data = stbi_load(_imagePath.c_str(), &_width, &_height, &nrChannels, 0);
-	if (data)
+	if (data && sizeof(data) > sizeof(""))
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

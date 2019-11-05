@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="renderables\CircleMaskQuad.cpp" />
     <ClCompile Include="common\shader.cpp" />
     <ClCompile Include="Main Classes\PassiveTree.cpp" />
     <ClCompile Include="Render.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="renderables\TexturedQuad.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="renderables\CircleMaskQuad.h" />
     <ClInclude Include="common\shader.hpp" />
     <ClInclude Include="common\stb_image.h" />
     <ClInclude Include="common\Debug.h" />
@@ -154,9 +156,14 @@
     <ClInclude Include="renderables\TexturedQuad.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="CircleMask.png" />
+    <Image Include="CircleMask16.png" />
     <Image Include="images\Background1.png" />
+    <Image Include="images\CircleMask.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\CircleMaskedTexture.fragmentshader" />
+    <None Include="shaders\CircleMaskedTexture.vertexshader" />
     <None Include="shaders\SimpleColor.fragmentshader" />
     <None Include="shaders\SimpleFragmentShader.fragmentshader" />
     <None Include="shaders\SimpleTexture.fragmentshader" />

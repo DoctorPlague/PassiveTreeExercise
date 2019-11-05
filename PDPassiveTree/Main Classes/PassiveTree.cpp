@@ -5,6 +5,7 @@
 #include "../renderables/Line.h"
 #include "../renderables/Points.h"
 #include "../renderables/TexturedQuad.h"
+#include "../renderables/CircleMaskQuad.h"
 
 
 #include "rapidjson/writer.h"
@@ -747,18 +748,23 @@ void PassiveTree::PopulateNodeTexture(std::unique_ptr<Node> const& _node)
 
 void PassiveTree::InitializeNodeTextures()
 {
+	unsigned int CircleMask;
+	int width, height;
+	RenderPtr->GenerateTexture(CircleMask, "CircleMask16.png", width, height);
+
 	for (auto& itr : uNodeMap)
 	{
 		PopulateNodeTexture(std::ref(itr.second));
 
 		// Generate node texture
-		RenderPtr->GenerateTexture(itr.second->texture, "images/nodeImages/" + itr.second->dn + ".png", itr.second->width, itr.second->height);	
+		RenderPtr->GenerateTexture(itr.second->texture, "images/nodeImages/" + itr.second->dn + ".png", itr.second->width, itr.second->height);			
 
 		// insert textured quad to represent node into ObjectMap
 		RenderPtr->ObjectMap.insert(std::pair<std::string, std::unique_ptr<RenderableObject>>(
 			"Node: " + std::to_string(itr.second->id),
-			std::make_unique<TexturedQuad>(
+			std::make_unique<CircleMaskQuad>(
 				itr.second->texture, 
+				CircleMask,
 				glm::vec3(itr.second->position, 0.0f), 
 				itr.second->width, 
 				itr.second->height)
